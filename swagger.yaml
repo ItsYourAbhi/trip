@@ -1,0 +1,465 @@
+openapi: 3.1.0
+info:
+  title: Trip API
+  description: API for managing travel destinations and trips
+  version: 1.0.0
+paths:
+  /csrf:
+    get:
+      summary: Generate CSRF token
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: CSRF token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  csrf:
+                    type: string
+  /login:
+    post:
+      summary: Login user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - email
+                - password
+                - csrf
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt:
+                    type: string
+  /register:
+    post:
+      summary: Register new user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - email
+                - name
+                - password
+                - csrf
+      responses:
+        '201':
+          description: User registered successfully
+  /destination:
+    get:
+      summary: Get all destinations
+      tags:
+        - Destination
+      responses:
+        '200':
+          description: Destinations retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Destination'
+    post:
+      summary: Create new destination
+      tags:
+        - Destination
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                attraction:
+                  type: string
+                pic_url:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - name
+                - description
+                - attraction
+                - pic_url
+                - csrf
+      responses:
+        '201':
+          description: Destination created successfully
+      security:
+        - jwt: []
+    put:
+      summary: Update destination
+      tags:
+        - Destination
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                attraction:
+                  type: string
+                pic_url:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - id
+                - csrf
+      responses:
+        '200':
+          description: Destination updated successfully
+      security:
+        - jwt: []
+  /destination/{id}:
+    get:
+      summary: Get destination by ID
+      tags:
+        - Destination
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Destination retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination'
+    delete:
+      summary: Delete destination
+      tags:
+        - Destination
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                csrf:
+                  type: string
+              required:
+                - csrf    
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Destination deleted successfully
+      security:
+        - jwt: []
+  /trip:
+    get:
+      summary: Get all trips
+      tags:
+        - Trip
+      responses:
+        '200':
+          description: Trips retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trip'
+    post:
+      summary: Create new trip
+      tags:
+        - Trip
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                start_date:
+                  type: string
+                  format: date
+                end_date:
+                  type: string
+                  format: date
+                destination_id:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - name
+                - start_date
+                - end_date
+                - destination_id
+                - csrf
+      responses:
+        '201':
+          description: Trip created successfully
+      security:
+        - jwt: []
+    put:
+      summary: Update trip
+      tags:
+        - Trip
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                start_date:
+                  type: string
+                  format: date
+                end_date:
+                  type: string
+                  format: date
+                destination_id:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - id
+                - csrf
+      responses:
+        '200':
+          description: Trip updated successfully
+      security:
+        - jwt: []
+  /trip/destination/{id}:
+    get:
+      summary: Get trip by ID
+      tags:
+        - Trip
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Trip retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+  /trip/{id}:
+    get:
+      summary: Get trip by ID
+      tags:
+        - Trip
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Trip retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+    delete:
+      summary: Delete trip
+      tags:
+        - Trip
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                csrf:
+                  type: string
+              required:
+                - csrf    
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Trip deleted successfully
+      security:
+        - jwt: []
+  /user:
+    post:
+      summary: Get user information
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                csrf:
+                  type: string
+              required:
+                - csrf
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+        - jwt: []
+        - csrf: []
+    put:
+      summary: Update user information
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                new_email:
+                  type: string
+                name:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - csrf
+      responses:
+        '200':
+          description: User information updated successfully
+      security:
+        - jwt: []
+  /admin:
+    post:
+      summary: Promote user to admin or Demote admin to user
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                admin:
+                  type: string
+                csrf:
+                  type: string
+              required:
+                - email
+                - csrf
+      responses:
+        '200':
+          description: User promoted to admin successfully
+      security:
+        - jwt: []
+components:
+  schemas:
+    Destination:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        attraction:
+          type: string
+    Trip:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        destination_id:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        admin:
+          type: boolean
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
