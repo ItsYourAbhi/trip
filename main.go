@@ -102,7 +102,7 @@ func main() {
 		CookieSameSite: cookieSameSite,
 		CookieSecure:   cookieSecure,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
-			// log.Println("CSRF Error:", err)
+			log.Println("CSRF Error:", err)
 			return c.Status(fiber.StatusForbidden).JSON(
 				&fiber.Map{"error": "forbidden"})
 		},
