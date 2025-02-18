@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"time"
 
 	// "github.com/ansrivas/fiberprometheus/v2"
@@ -14,7 +13,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/csrf"
+	// "github.com/gofiber/fiber/v2/middleware/csrf"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -89,29 +88,29 @@ func main() {
 
 	// Configure CSRF middleware
 	// cookieSecure = false if err happens
-	cookieSecure, _ := strconv.ParseBool(os.Getenv("CookieSecure"))
-	cookieSameSite := os.Getenv("CookieSameSite")
-	if cookieSameSite == "" {
-		cookieSameSite = "Lax"
-	}
+	// cookieSecure, _ := strconv.ParseBool(os.Getenv("CookieSecure"))
+	// cookieSameSite := os.Getenv("CookieSameSite")
+	// if cookieSameSite == "" {
+	// 	cookieSameSite = "Lax"
+	// }
 
-	csrf := csrf.New(csrf.Config{
-		KeyLookup:      "form:csrf",
-		CookieName:     "csrf",
-		ContextKey:     "csrf",
-		CookieSameSite: cookieSameSite,
-		CookieSecure:   cookieSecure,
-		ErrorHandler: func(c *fiber.Ctx, err error) error {
-			log.Println("CSRF Error:", err)
-			return c.Status(fiber.StatusForbidden).JSON(
-				&fiber.Map{"error": "forbidden"})
-		},
-		// Storage: postgres.New(postgres.Config{
-		// 	DB:    conn,
-		// 	Table: "csrf_token",
-		// }),
-		Storage: store,
-	})
+	// csrf := csrf.New(csrf.Config{
+	// 	KeyLookup:      "form:csrf",
+	// 	CookieName:     "csrf",
+	// 	ContextKey:     "csrf",
+	// 	CookieSameSite: cookieSameSite,
+	// 	CookieSecure:   cookieSecure,
+	// 	ErrorHandler: func(c *fiber.Ctx, err error) error {
+	// 		log.Println("CSRF Error:", err)
+	// 		return c.Status(fiber.StatusForbidden).JSON(
+	// 			&fiber.Map{"error": "forbidden"})
+	// 	},
+	// 	// Storage: postgres.New(postgres.Config{
+	// 	// 	DB:    conn,
+	// 	// 	Table: "csrf_token",
+	// 	// }),
+	// 	Storage: store,
+	// })
 
 	// Configure Swagger
 	swagger := swagger.New(swagger.Config{
@@ -154,7 +153,7 @@ func main() {
 	// prometheus.SetSkipPaths([]string{"/ping", "/favicon.ico"})
 
 	// Middlewares: logger, swagger, recover, cache, rate limiter & CSRF protection
-	app.Use(logger.New(), limiter, cors, csrf, cache, swagger, recover.New())
+	app.Use(logger.New(), limiter, cors, cache, swagger, recover.New())
 
 	// Set up routes
 	repo.SetupRoutes(app)

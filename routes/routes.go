@@ -43,7 +43,7 @@ func (r *Repo) SetupRoutes(app *fiber.App) {
 	})
 
 	// Auth
-	app.Get("/csrf", getCsrfToken)
+	// app.Get("/csrf", getCsrfToken)
 	login := app.Group("/login")
 	login.Post("", r.login)
 	app.Post("/register", r.register)

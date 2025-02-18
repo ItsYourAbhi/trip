@@ -16,16 +16,16 @@ import (
 )
 
 // getCsrf retrieves the CSRF token from the context and returns it
-func getCsrfToken(c *fiber.Ctx) error {
-	csrfToken, ok := c.Locals("csrf").(string)
-	if !ok {
-		return c.Status(fiber.StatusInternalServerError).JSON(
-			&fiber.Map{"error": "Failed to get csrf token"})
-	}
+// func getCsrfToken(c *fiber.Ctx) error {
+// 	csrfToken, ok := c.Locals("csrf").(string)
+// 	if !ok {
+// 		return c.Status(fiber.StatusInternalServerError).JSON(
+// 			&fiber.Map{"error": "Failed to get csrf token"})
+// 	}
 
-	return c.Status(fiber.StatusOK).JSON(
-		&fiber.Map{"csrf": csrfToken})
-}
+// 	return c.Status(fiber.StatusOK).JSON(
+// 		&fiber.Map{"csrf": csrfToken})
+// }
 
 // login handles user authentication and JWT token generation
 func (r *Repo) login(c *fiber.Ctx) error {
