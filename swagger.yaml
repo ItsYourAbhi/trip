@@ -4,21 +4,21 @@ info:
   description: API for managing travel destinations and trips
   version: 1.0.0
 paths:
-  /csrf:
-    get:
-      summary: Generate CSRF token
-      tags:
-        - Auth
-      responses:
-        '200':
-          description: CSRF token generated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  csrf:
-                    type: string
+  # /csrf:
+  #   get:
+  #     summary: Generate CSRF token
+  #     tags:
+  #       - Auth
+  #     responses:
+  #       '200':
+  #         description: CSRF token generated
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 csrf:
+  #                   type: string
   /login:
     post:
       summary: Login user
@@ -35,12 +35,12 @@ paths:
                   type: string
                 password:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - email
                 - password
-                - csrf
+                # - csrf
       responses:
         '200':
           description: User logged in successfully
@@ -69,13 +69,13 @@ paths:
                   type: string
                 password:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - email
                 - name
                 - password
-                - csrf
+                # - csrf
       responses:
         '201':
           description: User registered successfully
@@ -112,14 +112,14 @@ paths:
                   type: string
                 pic_url:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - name
                 - description
                 - attraction
                 - pic_url
-                - csrf
+                # - csrf
       responses:
         '201':
           description: Destination created successfully
@@ -146,11 +146,11 @@ paths:
                   type: string
                 pic_url:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - id
-                - csrf
+                # - csrf
       responses:
         '200':
           description: Destination updated successfully
@@ -185,10 +185,10 @@ paths:
             schema:
               type: object
               properties:
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
-                - csrf    
+                # - csrf    
       parameters:
         - in: path
           name: id
@@ -235,14 +235,14 @@ paths:
                   format: date
                 destination_id:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - name
                 - start_date
                 - end_date
                 - destination_id
-                - csrf
+                # - csrf
       responses:
         '201':
           description: Trip created successfully
@@ -271,11 +271,11 @@ paths:
                   format: date
                 destination_id:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - id
-                - csrf
+                # - csrf
       responses:
         '200':
           description: Trip updated successfully
@@ -328,10 +328,10 @@ paths:
             schema:
               type: object
               properties:
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
-                - csrf    
+                # - csrf    
       parameters:
         - in: path
           name: id
@@ -355,10 +355,10 @@ paths:
             schema:
               type: object
               properties:
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
-                - csrf
+                # - csrf
       responses:
         '200':
           description: User information retrieved successfully
@@ -368,7 +368,7 @@ paths:
                 $ref: '#/components/schemas/User'
       security:
         - jwt: []
-        - csrf: []
+        # - csrf: []
     put:
       summary: Update user information
       tags:
@@ -384,10 +384,10 @@ paths:
                   type: string
                 name:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
-                - csrf
+                # - csrf
       responses:
         '200':
           description: User information updated successfully
@@ -409,11 +409,11 @@ paths:
                   type: string
                 admin:
                   type: string
-                csrf:
-                  type: string
+                # csrf:
+                #   type: string
               required:
                 - email
-                - csrf
+                # - csrf
       responses:
         '200':
           description: User promoted to admin successfully
