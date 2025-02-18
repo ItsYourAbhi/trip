@@ -144,7 +144,7 @@ func main() {
 	cors := cors.New(cors.Config{
 		AllowOrigins:     origin,
 		AllowCredentials: true,
-		AllowHeaders:     "Origin, Content-Type, Accept, Cookie",
+		// AllowHeaders:     "Origin, Content-Type, Accept, Cookie",
 	})
 
 	// prometheus config
